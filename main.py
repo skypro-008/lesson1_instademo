@@ -1,11 +1,28 @@
-from flask import Flask, request
-app = Flask(__main__)
+import os
+
+from flask import Flask, jsonify
+from flask_migrate import Migrate
+from flask_sqlalchemy import SQLAlchemy
+
+app = Flask(__name__)
+basedir = os.path.abspath(os.path.dirname(__file__))
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'app.db')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+from models import Post, Comment  # noqa
 
 """ ПОСТЫ """
 
+
 @app.route("/posts/")
 def get_posts():
-
+    posts = Post.query.all()
+    print(posts)
+    return jsonify({})
     """Возвращает список всех постов"""
 
     # TODO как и где будем хранить посты
@@ -60,21 +77,5 @@ def post_comment():
     # TODO: добавить комментарий с спикску комментариев поста
 
 
-
-
-
-
-app.run()
-
-
-
-
-
-
-
-
-
-
-
-
-
+if __name__ == '__main__':
+    app.run(debug=True)
