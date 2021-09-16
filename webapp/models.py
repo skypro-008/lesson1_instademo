@@ -1,24 +1,22 @@
 from webapp import db
+from webapp.mixins import SQLMixin
 
 
-class Post(db.Model):
+class Post(SQLMixin, db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.String(50))
     content = db.Column(db.String(1000))
     image = db.Column(db.String(100))
-    likes = db.Column(db.Integer)
-    dislikes = db.Column(db.Integer)
-    views = db.Column(db.Integer)
-    comments = db.relationship('Comment')
+    likes = db.Column(db.Integer, default=0)
+    dislikes = db.Column(db.Integer, default=0)
+    views = db.Column(db.Integer, default=0)
+    comments = db.relationship('Comment', cascade="all, delete")
 
     def __init__(self, author: str, content: str, image: str):
         self.author = author
         self.content = content
         self.image = image
-        self.views = 0
-        self.likes = 0
-        self.dislikes = 0
 
     def to_dict(self):
         return {
@@ -28,12 +26,12 @@ class Post(db.Model):
             'image': self.image,
             'views': self.views,
             'likes': self.likes,
-            'dislike': self.dislikes,
+            'dislikes': self.dislikes,
             'comments': [comment.to_dict() for comment in self.comments]
         }
 
 
-class Comment(db.Model):
+class Comment(SQLMixin, db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.String(100))

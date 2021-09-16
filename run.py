@@ -1,5 +1,7 @@
-from webapp import app, db
-from webapp import models, views    # noqa F401
+from webapp import app, cli, db, models, views  # noqa F401
+
+cli.register_posts(app)
+cli.register_comments(app)
 
 
 @app.shell_context_processor
