@@ -38,7 +38,7 @@ def register_posts(app):
             elif input(f'Хочешь удалить пост #{post_id}? [Y/n] ').lower() == 'y':
                 Post.query.filter_by(id=post_id).delete()
         else:
-            if input(f'Хочешь удалить все посты? [Y/n] ').lower() == 'y':
+            if input('Хочешь удалить все посты? [Y/n] ').lower() == 'y':
                 for post in Post.query.all():
                     post.delete()
 
@@ -62,7 +62,7 @@ def register_posts(app):
         content = input('Контент: ')
         image = input('Картинка: ')
         post = Post(author, content, image)
-        if input(f'Создаем? [Y/n] ').lower() == 'y':
+        if input('Создаем? [Y/n] ').lower() == 'y':
             post.add()
             return pprint(post.to_dict())
 
@@ -98,7 +98,7 @@ def register_comments(app):
             author = input('Автор: ')
             content = input('Контент: ')
             comment = Comment(author, content, post.id)
-            if input(f'Создаем? [Y/n] ').lower() == 'y':
+            if input('Создаем? [Y/n] ').lower() == 'y':
                 comment.add()
                 return pprint(comment.to_dict())
         else:
