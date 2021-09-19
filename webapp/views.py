@@ -4,14 +4,6 @@ from webapp import app
 from webapp.models import Comment, Post
 
 
-# TODO как и где будем хранить посты
-# TODO как будем импортировать посты в модели
-# TODO  как мы храним лайкнутость и избранность
-# TODO  может быть смотреть количестов просмотров
-# TODO  как оставляется комментарий?
-# TODO  где хранятся картинки
-
-
 @app.route("/posts/", methods=["GET"])
 def get_posts():
     """ Возвращает все посты. """
@@ -52,5 +44,5 @@ def post_comment(post_id):
     if "author" not in data or "content" not in data:
         abort(400)
 
-    comment = Comment(data['author'], data['content'], post.id).save()
+    comment = Comment(data['author'], data['content'], post.id).add()
     return jsonify(comment.to_dict()), 201
