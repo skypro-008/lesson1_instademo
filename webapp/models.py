@@ -27,7 +27,7 @@ class Post(SQLMixin, db.Model):
             'views': self.views,
             'likes': self.likes,
             'dislikes': self.dislikes,
-            'comments': [comment.to_dict() for comment in self.comments]
+            'comments': [comment.id for comment in self.comments]
         }
 
 
