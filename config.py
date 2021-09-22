@@ -9,6 +9,7 @@ class ProductionConfig:
         schema='d951cg60mur8eo'
     )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    JSON_AS_ASCII = False
 
 
 class TestConfig:
