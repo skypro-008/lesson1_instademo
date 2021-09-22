@@ -25,6 +25,11 @@ flask --help
 # flask post
 # flask comments
 ```
+
+## Запуск тестов (unittest)
+```bash
+python test.py
+```
 ## Эндпоинты
 
 ### Возвращает все посты
