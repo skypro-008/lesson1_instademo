@@ -42,7 +42,14 @@ class MainTestCase(unittest.TestCase):
 
             first_record = resp_list[0]
             self.assertTrue(isinstance(first_record, dict))
-            self.assertDictEqual(first_record, post.to_dict())
+            self.assertEqual(first_record['id'], post.id)
+            self.assertEqual(first_record['author'], POST_DATA['author'])
+            self.assertEqual(first_record['content'], POST_DATA['content'])
+            self.assertEqual(first_record['image'], POST_DATA['image'])
+            self.assertEqual(first_record['views'], 0)
+            self.assertEqual(first_record['likes'], 0)
+            self.assertEqual(first_record['dislikes'], 0)
+            self.assertListEqual(first_record['comments'], [{'id': 1}])
 
     def test_like_posts(self):
         url = '/posts/{}/like/'
@@ -114,6 +121,13 @@ class MainTestCase(unittest.TestCase):
 
             resp = client.post(url.format('2'))
             self.assertEqual(resp.status_code, 404)
+
+            resp = client.post(
+                path=url.format('1'),
+                data=json.dumps({'author': 'author'}),
+                headers={'Content-Type': 'application/json'}
+            )
+            self.assertEqual(resp.status_code, 400)
 
             resp = client.post(
                 path=url.format('1'),

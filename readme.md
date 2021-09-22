@@ -18,12 +18,9 @@ flask db upgrade
 # Запуск
 flask run
 
-# Справка по командам
-flask --help
+# Эндпоинты
+flask routes
 
-## добавлены команды 
-# flask post
-# flask comments
 ```
 
 ## Запуск тестов (unittest)

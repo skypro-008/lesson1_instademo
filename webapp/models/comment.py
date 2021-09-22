@@ -1,3 +1,6 @@
+from marshmallow import fields
+from marshmallow_sqlalchemy import SQLAlchemySchema
+
 from webapp import db
 from webapp.mixins import SQLMixin
 
@@ -14,10 +17,12 @@ class Comment(SQLMixin, db.Model):
         self.content = content
         self.post_id = post_id
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'author': self.author,
-            'content': self.content,
-            'post_id': self.post_id
-        }
+
+class CommentSchema(SQLAlchemySchema):
+    class Meta(SQLAlchemySchema):
+        model = Comment
+
+    id = fields.Integer(dump_only=True)
+    author = fields.String(required=True)
+    content = fields.String(required=True)
+    post_id = fields.Integer()

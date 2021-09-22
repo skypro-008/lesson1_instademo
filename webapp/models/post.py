@@ -1,3 +1,6 @@
+from marshmallow import fields
+from marshmallow_sqlalchemy import SQLAlchemySchema
+
 from webapp import db
 from webapp.mixins import SQLMixin
 
@@ -18,14 +21,20 @@ class Post(SQLMixin, db.Model):
         self.content = content
         self.image = image
 
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'author': self.author,
-            'content': self.content,
-            'image': self.image,
-            'views': self.views,
-            'likes': self.likes,
-            'dislikes': self.dislikes,
-            'comments': [comment.id for comment in self.comments]
-        }
+
+class PostSchema(SQLAlchemySchema):
+    class Meta(SQLAlchemySchema):
+        model = Post
+
+    id = fields.Integer(dump_only=True)
+    author = fields.String(required=True)
+    content = fields.String(required=True)
+    image = fields.String(required=True)
+    views = fields.Integer()
+    likes = fields.Integer()
+    dislikes = fields.Integer()
+    comments = fields.Nested('CommentSchema', many=True, only=('id',))
+
+
+class PostCommentsSchema(PostSchema):
+    comments = fields.Nested('CommentSchema', many=True)
