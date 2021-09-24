@@ -35,6 +35,7 @@ class MainTestCase(unittest.TestCase):
             resp = client.get(url)
             self.assertEqual(resp.status_code, 200)
             self.assertEqual(resp.access_control_allow_origin, '*')
+            self.assertListEqual(resp.access_control_allow_headers._headers, ['*'])
 
             resp_list = resp.get_json()
             self.assertTrue(isinstance(resp_list, list))
@@ -65,6 +66,7 @@ class MainTestCase(unittest.TestCase):
             resp = client.post(url.format('1'))
             self.assertEqual(resp.status_code, 200)
             self.assertEqual(resp.access_control_allow_origin, '*')
+            self.assertListEqual(resp.access_control_allow_headers._headers, ['*'])
             data: dict = resp.get_json()
             self.assertEqual(data['likes'], 1)
 
@@ -82,6 +84,7 @@ class MainTestCase(unittest.TestCase):
             resp = client.post(url.format('1'))
             self.assertEqual(resp.status_code, 200)
             self.assertEqual(resp.access_control_allow_origin, '*')
+            self.assertListEqual(resp.access_control_allow_headers._headers, ['*'])
             data: dict = resp.get_json()
             self.assertEqual(data['dislikes'], 1)
 
@@ -100,6 +103,7 @@ class MainTestCase(unittest.TestCase):
             resp = client.get(url.format('1'))
             self.assertEqual(resp.status_code, 200)
             self.assertEqual(resp.access_control_allow_origin, '*')
+            self.assertListEqual(resp.access_control_allow_headers._headers, ['*'])
 
             resp_list = resp.get_json()
             self.assertTrue(isinstance(resp_list, list))
@@ -136,6 +140,7 @@ class MainTestCase(unittest.TestCase):
             )
             self.assertEqual(resp.status_code, 201)
             self.assertEqual(resp.access_control_allow_origin, '*')
+            self.assertListEqual(resp.access_control_allow_headers._headers, ['*'])
             data: dict = resp.get_json()
             self.assertEqual(data['id'], 1)
             self.assertEqual(data['author'], COMMENT_DATA['author'])
