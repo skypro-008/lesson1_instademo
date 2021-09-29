@@ -5,7 +5,7 @@
 ## Использовалось
 - Python 3.9
 - Flask
-- SQLite3
+- PostgreSQL
 
 
 ## Как запустить
