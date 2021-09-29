@@ -1,4 +1,4 @@
-from marshmallow import fields
+from marshmallow import fields, post_load
 from marshmallow_sqlalchemy import SQLAlchemySchema
 
 from webapp import db
@@ -26,3 +26,7 @@ class CommentSchema(SQLAlchemySchema):
     author = fields.String(required=True)
     content = fields.String(required=True)
     post_id = fields.Integer()
+
+    @post_load
+    def create_comment(self, data, **kwargs):
+        return Comment(**data)
